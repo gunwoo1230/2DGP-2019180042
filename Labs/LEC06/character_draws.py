@@ -7,12 +7,24 @@ open_canvas(800,600)
 
 character = load_image('character.png')
 
+CIRCLE_CX, CIRCLE_CY = 400, 300
+CIRCLE_R = 200
+
 def draw_character(x, y):
     clear_canvas()
     character.draw(x, y)
     update_canvas()
     delay(0.05)
 
+def move_circle():
+    print("원 이동")
+
+    for degree in range(0, 360, 5):
+        theta = math.radians(degree)
+        x = 400 + 200 * math.cos(theta)
+        y = 300 + 200 * math.sin(theta)
+        draw_character(x, y)
+        
 def move_top():
     print("위 이동")
 
@@ -37,14 +49,6 @@ def move_left():
     for x in range(100, 500, 5):
         draw_character(50, x)
 
-def move_circle():
-    print("원 이동")
-
-    for degree in range(0, 360, 5):
-        theta = math.radians(degree)
-        x = 400 + 200 * math.cos(theta)
-        y = 300 + 200 * math.sin(theta)
-        draw_character(x, y)
 
 def move_rectangle():
     print("사각형 이동")
