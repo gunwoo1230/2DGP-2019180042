@@ -66,51 +66,39 @@ def move_rectangle():
     move_left()
     pass
 
-def move_triangle_bottom():
-    print("삼각형 아래 이동")
+def move_line(p1, p2):
+    x1, y1 = p1
+    x2, y2 = p2
 
-    x1, y1 = TRI_RIGHT
-    x2, y2 = TRI_LEFT
-    
     for i in range(0, 100 + 1, 2):
         t = i / 100
         x = (1 - t) * x1 + t * x2
         y = (1 - t) * y1 + t * y2
         draw_character(x, y)
+
+
+def move_triangle_bottom():
+    print("삼각형 아래 이동")
+
+    move_line(TRI_RIGHT, TRI_LEFT)
     
     pass
 
 def move_triangle_left():
     print("삼각형 왼쪽 이동")
     
-    x1, y1 = TRI_LEFT
-    x2, y2 = TRI_TOP
-
-    for i in range(0, 100 + 1, 2):
-        t = i / 100
-        x = (1 - t) * x1 + t * x2
-        y = (1 - t) * y1 + t * y2
-        draw_character(x, y)
-    pass
+    move_line(TRI_LEFT, TRI_TOP)
 
 def move_triangle_right():
     print("삼각형 오른쪽 이동")
 
-    x1, y1 = TRI_TOP
-    x2, y2 = TRI_RIGHT
-
-    for i in range(0, 100 + 1, 2):
-        t = i / 100
-        x = (1 - t) * x1 + t * x2
-        y = (1 - t) * y1 + t * y2
-        draw_character(x, y)
-    pass
+    move_line(TRI_TOP, TRI_RIGHT)
 
 def move_triangle():
     print("삼각형 이동")
 
-    #move_triangle_bottom()
-    #move_triangle_left()
+    move_triangle_bottom()
+    move_triangle_left()
     move_triangle_right()
     pass
 
