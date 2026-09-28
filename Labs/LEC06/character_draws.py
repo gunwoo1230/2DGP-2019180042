@@ -69,23 +69,25 @@ def move_triangle_bottom():
     
     pass
 
-def move_triangle_right():
-    print("삼각형 오른쪽 이동")
-
-    pass
-
-
 def move_triangle_left():
     print("삼각형 왼쪽 이동")
     
+    x1, y1 = 100, 100
+    x2, y2 = 400, 500
+
+    pass
+
+def move_triangle_right():
+    print("삼각형 오른쪽 이동")
+
     pass
 
 def move_triangle():
     print("삼각형 이동")
 
     move_triangle_bottom()
-    move_triangle_right()
     move_triangle_left()
+    move_triangle_right()
     pass
 
 while True:
