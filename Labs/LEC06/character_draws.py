@@ -87,7 +87,12 @@ def move_triangle_right():
 
     x1, y1 = 400, 500
     x2, y2 = 700, 100
-    
+
+    for i in range(0, 100 + 1, 2):
+        t = i / 100
+        x = (1 - t) * x1 + t * x2
+        y = (1 - t) * y1 + t * y2
+        draw_character(x, y)
     pass
 
 def move_triangle():
