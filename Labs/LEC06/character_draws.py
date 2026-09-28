@@ -64,7 +64,6 @@ def move_rectangle():
     move_right()
     move_bottom()
     move_left()
-    pass
 
 def move_line(p1, p2):
     x1, y1 = p1
@@ -81,8 +80,6 @@ def move_triangle_bottom():
     print("삼각형 아래 이동")
 
     move_line(TRI_RIGHT, TRI_LEFT)
-    
-    pass
 
 def move_triangle_left():
     print("삼각형 왼쪽 이동")
@@ -100,12 +97,10 @@ def move_triangle():
     move_triangle_bottom()
     move_triangle_left()
     move_triangle_right()
-    pass
 
 while True:
-    #move_circle()
-    #move_rectangle()
+    move_circle()
+    move_rectangle()
     move_triangle()
-    break
 
 close_canvas()
