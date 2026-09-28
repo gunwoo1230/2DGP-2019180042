@@ -32,8 +32,9 @@ def move_circle():
 def move_top():
     print("위 이동")
 
-    for x in range(50, 750, 5):
-        draw_character(x, 500)
+    for x in range(RECT_LEFT, RECT_RIGHT, 5):
+        draw_character(x, RECT_TOP)
+
 
 def move_right():
     print("오른쪽 이동")
