@@ -10,6 +10,10 @@ character = load_image('character.png')
 CIRCLE_CX, CIRCLE_CY = 400, 300
 CIRCLE_R = 200
 
+RECT_LEFT, RECT_RIGHT = 50, 750
+RECT_BOTTOM, RECT_TOP = 100, 500
+
+
 def draw_character(x, y):
     clear_canvas()
     character.draw(x, y)
