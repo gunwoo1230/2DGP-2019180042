@@ -46,7 +46,7 @@ def move_circle():
         y = 300 + 200 * math.sin(theta)
         draw_character(x, y)
 
-def move_rectangleLine():
+def move_rectangle():
     print("사각형 이동")
 
     move_top()
@@ -55,13 +55,26 @@ def move_rectangleLine():
     move_left()
     pass
 
+def move_triangle_bottom():
+    pass
+
+def move_triangle_left():
+    pass
+
+def move_triangle_right():
+    pass
+
 def move_triangle():
     print("삼각형 이동")
+
+    move_triangle_bottom()
+    move_triangle_left()
+    move_triangle_right()
     pass
 
 while True:
     #move_circle()
-    move_rectangleLine()
+    move_rectangle()
     move_triangle()
     break
 
