@@ -75,10 +75,16 @@ def move_triangle_left():
     x1, y1 = 100, 100
     x2, y2 = 400, 500
 
+    for i in range(0, 100 + 1, 2):
+        t = i / 100
+        x = (1 - t) * x1 + t * x2
+        y = (1 - t) * y1 + t * y2
+        draw_character(x, y)
     pass
 
 def move_triangle_right():
     print("삼각형 오른쪽 이동")
+
 
     pass
 
