@@ -35,12 +35,11 @@ def move_top():
     for x in range(RECT_LEFT, RECT_RIGHT, 5):
         draw_character(x, RECT_TOP)
 
-
 def move_right():
     print("오른쪽 이동")
 
-    for x in range(500, 100, -5):
-        draw_character(750, x)
+    for y in range(RECT_TOP, RECT_BOTTOM, -5):
+        draw_character(RECT_RIGHT, y)
 
 def move_bottom():
     print("아래 이동")
