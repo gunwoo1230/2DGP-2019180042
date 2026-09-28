@@ -56,12 +56,18 @@ def move_rectangle():
     pass
 
 def move_triangle_bottom():
+    print("삼각형 아래 이동")
+
     pass
 
 def move_triangle_left():
+    print("삼각형 왼쪽 이동")
+    
     pass
 
 def move_triangle_right():
+    print("삼각형 오른쪽 이동")
+
     pass
 
 def move_triangle():
@@ -74,7 +80,7 @@ def move_triangle():
 
 while True:
     #move_circle()
-    move_rectangle()
+    #move_rectangle()
     move_triangle()
     break
 
