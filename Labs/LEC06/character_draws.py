@@ -21,10 +21,10 @@ def move_circle():
 
     for degree in range(0, 360, 5):
         theta = math.radians(degree)
-        x = 400 + 200 * math.cos(theta)
-        y = 300 + 200 * math.sin(theta)
+        x = CIRCLE_CX + CIRCLE_R * math.cos(theta)
+        y = CIRCLE_CY + CIRCLE_R * math.sin(theta)
         draw_character(x, y)
-        
+
 def move_top():
     print("위 이동")
 
