@@ -58,10 +58,14 @@ def move_rectangle():
 def move_triangle_bottom():
     print("삼각형 아래 이동")
 
-    pass
-
-def move_triangle_left():
-    print("삼각형 왼쪽 이동")
+    x1, y1 = 700, 100
+    x2, y2 = 100, 100
+    
+    for i in range(0, 100 + 1, 2):
+        t = i / 100
+        x = (1 - t) * x1 + t * x2
+        y = (1 - t) * y1 + t * y2
+        draw_character(x, y)
     
     pass
 
@@ -70,12 +74,21 @@ def move_triangle_right():
 
     pass
 
+
+def move_triangle_left():
+    print("삼각형 왼쪽 이동")
+    
+    for x in range(100, 500, 5):
+        draw_character(50, x)
+    
+    pass
+
 def move_triangle():
     print("삼각형 이동")
 
     move_triangle_bottom()
-    move_triangle_left()
     move_triangle_right()
+    move_triangle_left()
     pass
 
 while True:
