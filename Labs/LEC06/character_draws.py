@@ -85,7 +85,9 @@ def move_triangle_left():
 def move_triangle_right():
     print("삼각형 오른쪽 이동")
 
-
+    x1, y1 = 400, 500
+    x2, y2 = 700, 100
+    
     pass
 
 def move_triangle():
