@@ -69,8 +69,9 @@ def move_rectangle():
 def move_triangle_bottom():
     print("삼각형 아래 이동")
 
-    x1, y1 = 700, 100
-    x2, y2 = 100, 100
+    x1, y1 = TRI_RIGHT
+    x2, y2 = TRI_LEFT
+
     
     for i in range(0, 100 + 1, 2):
         t = i / 100
