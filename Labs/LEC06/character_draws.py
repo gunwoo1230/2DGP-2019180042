@@ -13,6 +13,9 @@ CIRCLE_R = 200
 RECT_LEFT, RECT_RIGHT = 50, 750
 RECT_BOTTOM, RECT_TOP = 100, 500
 
+TRI_TOP = (400, 500)
+TRI_RIGHT = (700, 100)
+TRI_LEFT = (100, 100)
 
 def draw_character(x, y):
     clear_canvas()
