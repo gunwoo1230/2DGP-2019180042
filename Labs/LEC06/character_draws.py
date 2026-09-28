@@ -96,8 +96,8 @@ def move_triangle_left():
 def move_triangle_right():
     print("삼각형 오른쪽 이동")
 
-    x1, y1 = 400, 500
-    x2, y2 = 700, 100
+    x1, y1 = TRI_TOP
+    x2, y2 = TRI_RIGHT
 
     for i in range(0, 100 + 1, 2):
         t = i / 100
@@ -110,7 +110,7 @@ def move_triangle():
     print("삼각형 이동")
 
     #move_triangle_bottom()
-    move_triangle_left()
+    #move_triangle_left()
     move_triangle_right()
     pass
 
