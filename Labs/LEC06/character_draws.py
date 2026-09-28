@@ -78,9 +78,6 @@ def move_triangle_right():
 def move_triangle_left():
     print("삼각형 왼쪽 이동")
     
-    for x in range(100, 500, 5):
-        draw_character(50, x)
-    
     pass
 
 def move_triangle():
