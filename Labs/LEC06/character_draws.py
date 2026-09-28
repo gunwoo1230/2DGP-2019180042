@@ -7,6 +7,22 @@ open_canvas(800,600)
 
 character = load_image('character.png')
 
+def move_top():
+    print("위 이동")
+    pass
+
+def move_right():
+    print("오른쪽 이동")
+    pass
+
+def move_bottom():
+    print("아래 이동")
+    pass
+
+def move_left():
+    print("왼쪽 이동")
+    pass
+
 def move_circle():
     print("원 이동")
 
@@ -18,10 +34,14 @@ def move_circle():
         character.draw(x, y)
         update_canvas()
         delay(0.05)
-    pass
 
 def move_rectangle():
     print("사각형 이동")
+
+    move_top()
+    move_right()
+    move_bottom()
+    move_left()
     pass
 
 def move_triangle():
