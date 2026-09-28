@@ -49,9 +49,9 @@ def move_bottom():
 
 def move_left():
     print("왼쪽 이동")
-    
-    for x in range(100, 500, 5):
-        draw_character(50, x)
+
+    for y in range(RECT_BOTTOM, RECT_TOP, 5):
+        draw_character(RECT_LEFT, y)
 
 
 def move_rectangle():
