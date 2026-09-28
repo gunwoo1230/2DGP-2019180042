@@ -27,11 +27,15 @@ def move_right():
 
 def move_bottom():
     print("아래 이동")
-    pass
+
+    for x in range(750, 50, -5):
+        draw_character(x, 100)
 
 def move_left():
     print("왼쪽 이동")
-    pass
+    
+    for x in range(100, 500, 5):
+        draw_character(50, x)
 
 def move_circle():
     print("원 이동")
@@ -42,10 +46,10 @@ def move_circle():
         y = 300 + 200 * math.sin(theta)
         draw_character(x, y)
 
-def move_rectangle():
+def move_rectangleLine():
     print("사각형 이동")
 
-    #move_top()
+    move_top()
     move_right()
     move_bottom()
     move_left()
@@ -57,7 +61,7 @@ def move_triangle():
 
 while True:
     #move_circle()
-    move_rectangle()
+    move_rectangleLine()
     move_triangle()
     break
 
