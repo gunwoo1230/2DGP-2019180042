@@ -1,5 +1,10 @@
 import os
+import sys
 from pico2d import *
+
+BACKGROUND_FILE = 'TUK_GROUND.png'
+GROUND_FILE = 'grass.png'
+SHEET_FILE = 'sonic-sprite.png'
 
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 밖으로 내림
@@ -89,10 +94,14 @@ def init():
     global background, ground, player
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
-    background = load_image('TUK_GROUND.png')
-    ground = load_image('grass.png')
-    sheet = load_image('sonic-sprite.png')
+    background = load_image(BACKGROUND_FILE)
+    ground = load_image(GROUND_FILE)
+    sheet = load_image(SHEET_FILE)
     player = AnimationPlayer([Animation(name, frames, sheet) for name, frames in ANIMATIONS])
+
+
+def find_missing_resources():
+    return [f for f in (BACKGROUND_FILE, GROUND_FILE, SHEET_FILE) if not os.path.isfile(f)]
 
 
 def handle_events():
@@ -117,6 +126,13 @@ def draw():
 
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))  # 어디서 실행해도 이 파일 옆의 리소스를 찾도록
+missing = find_missing_resources()
+if missing:  # 창을 열기 전에 확인해, 빈 창이 뜨거나 알 수 없는 OSError로 죽지 않게 한다
+    print('[오류] 리소스 파일을 찾을 수 없습니다:')
+    for f in missing:
+        print('  -', os.path.join(os.getcwd(), f))
+    print('animation_viewer.py와 같은 폴더에 위 파일을 넣은 뒤 다시 실행하세요.')
+    sys.exit(1)
 init()
 while running:
     handle_events()
