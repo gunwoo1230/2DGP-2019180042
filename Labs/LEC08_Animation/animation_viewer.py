@@ -68,6 +68,7 @@ def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     ground.draw(CANVAS_WIDTH // 2, GRASS_CENTER_Y)
+    draw_frame(RUN_FRAMES[0], CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
     update_canvas()
 
 
