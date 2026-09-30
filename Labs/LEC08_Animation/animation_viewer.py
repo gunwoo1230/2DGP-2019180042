@@ -43,8 +43,6 @@ def init():
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
     sheet = load_image('sonic-sprite.png')
-    for name, frames in ANIMATIONS:  # 확인용 출력 (다음 단계에서 제거)
-        print(name, len(frames))
 
 
 def handle_events():
