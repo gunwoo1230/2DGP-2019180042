@@ -28,6 +28,7 @@ def update():
 
 def draw():
     clear_canvas()
+    background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     update_canvas()
 
 
