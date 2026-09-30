@@ -37,27 +37,38 @@ ANIMATIONS = [
 running = True
 background = None
 ground = None
-sheet = None
-scales = {}  # 애니메이션 이름 → 배율. 한 애니메이션 안에서는 같은 배율을 써야 캐릭터가 떨리지 않는다.
-anim_index = 0    # ANIMATIONS 중 재생 중인 애니메이션
+animations = []  # Animation 객체 목록 (ANIMATIONS 순서)
+anim_index = 0    # animations 중 재생 중인 애니메이션
 frame_index = 0   # 그 애니메이션의 현재 프레임
 play_start = 0.0  # 현재 애니메이션 재생을 시작한 시각
 loop_count = 0    # 현재 애니메이션을 끝까지 재생한 횟수
 
 
-def calc_scale(frames):
-    return CHARACTER_HEIGHT / max(frame[3] for frame in frames)  # frame[3] = 높이
+class Animation:
+    def __init__(self, name, frames, sheet):
+        self.name = name
+        self.frames = frames  # [(x, y, w, h), ...] 프레임마다 크기가 다르다
+        self.sheet = sheet
+        # 배율은 애니메이션마다 한 번만 계산해 모든 프레임에 같이 쓴다. (프레임마다 바꾸면 캐릭터가 떨린다)
+        self.scale = CHARACTER_HEIGHT / max(h for _, _, _, h in frames)
+
+    def draw(self, index, x, foot_y):
+        fx, fy, fw, fh = self.frames[index]
+        bottom = self.sheet.h - fy - fh  # 시트 좌상단 기준 y → pico2d 좌하단 기준 bottom
+        w, h = fw * self.scale, fh * self.scale
+        # clip_draw는 중심 기준이므로, 아래 변이 foot_y에 오도록 중심을 h/2만큼 올린다.
+        self.sheet.clip_draw(fx, bottom, fw, fh, x, foot_y + h / 2, w, h)
 
 
 def init():
-    global background, ground, sheet, play_start
+    global background, ground, play_start
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
     sheet = load_image('sonic-sprite.png')
     for name, frames in ANIMATIONS:
-        scales[name] = calc_scale(frames)
+        animations.append(Animation(name, frames, sheet))
     play_start = get_time()
 
 
@@ -72,7 +83,7 @@ def handle_events():
 
 def update():
     global anim_index, frame_index, loop_count, play_start
-    frames = ANIMATIONS[anim_index][1]
+    frames = animations[anim_index].frames
     elapsed = get_time() - play_start
     # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
     step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
@@ -82,24 +93,15 @@ def update():
         frame_index = 0
         pause_elapsed = elapsed - REPEAT_COUNT * len(frames) * FRAME_TIME
         if pause_elapsed >= PAUSE_TIME:  # 정지 시간이 지나면 다음 애니메이션으로 (마지막 다음은 처음)
-            anim_index = (anim_index + 1) % len(ANIMATIONS)
+            anim_index = (anim_index + 1) % len(animations)
             play_start = get_time()
-
-
-def draw_frame(frame, x, foot_y, scale):
-    fx, fy, fw, fh = frame
-    bottom = sheet.h - fy - fh  # 시트 좌상단 기준 y → pico2d 좌하단 기준 bottom
-    w, h = fw * scale, fh * scale
-    # clip_draw는 중심 기준이므로, 아래 변이 foot_y에 오도록 중심을 h/2만큼 올린다.
-    sheet.clip_draw(fx, bottom, fw, fh, x, foot_y + h / 2, w, h)
 
 
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     ground.draw(CANVAS_WIDTH // 2, GRASS_CENTER_Y)
-    name, frames = ANIMATIONS[anim_index]
-    draw_frame(frames[frame_index], CANVAS_WIDTH // 2, GROUND_Y, scales[name])
+    animations[anim_index].draw(frame_index, CANVAS_WIDTH // 2, GROUND_Y)
     update_canvas()
 
 
