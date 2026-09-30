@@ -3,6 +3,7 @@ from pico2d import *
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 밖으로 내림
 GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)이 놓이는 높이
+CHARACTER_HEIGHT = 340  # 애니메이션의 가장 큰 프레임이 화면에서 차지할 높이 (640의 절반 이상)
 
 # 프레임 = 시트 좌상단 기준 (x, y, w, h). 알파 경계로 타이트하게 잘라 프레임마다 크기가 다르다.
 RUN_FRAMES = [
@@ -34,6 +35,11 @@ running = True
 background = None
 ground = None
 sheet = None
+scales = {}  # 애니메이션 이름 → 배율. 한 애니메이션 안에서는 같은 배율을 써야 캐릭터가 떨리지 않는다.
+
+
+def calc_scale(frames):
+    return CHARACTER_HEIGHT / max(frame[3] for frame in frames)  # frame[3] = 높이
 
 
 def init():
@@ -43,6 +49,8 @@ def init():
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
     sheet = load_image('sonic-sprite.png')
+    for name, frames in ANIMATIONS:
+        scales[name] = calc_scale(frames)
 
 
 def handle_events():
