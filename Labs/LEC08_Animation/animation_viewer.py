@@ -22,6 +22,14 @@ DIZZY_FRAMES = [
     (6, 429, 34, 40), (49, 426, 34, 43), (96, 427, 23, 39), (125, 427, 23, 39),
 ]
 
+# 재생 순서대로 (이름, 프레임 리스트). 프레임 수는 len()으로만 다룬다.
+ANIMATIONS = [
+    ('run', RUN_FRAMES),
+    ('roll', ROLL_FRAMES),
+    ('balance', BALANCE_FRAMES),
+    ('dizzy', DIZZY_FRAMES),
+]
+
 running = True
 background = None
 ground = None
@@ -35,6 +43,8 @@ def init():
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
     sheet = load_image('sonic-sprite.png')
+    for name, frames in ANIMATIONS:  # 확인용 출력 (다음 단계에서 제거)
+        print(name, len(frames))
 
 
 def handle_events():
