@@ -3,7 +3,6 @@ from pico2d import *
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 
 running = True
-frame_count = 0  # 확인용: 3프레임 후 종료 (종료 처리 구현 후 제거)
 
 
 def init():
@@ -12,7 +11,12 @@ def init():
 
 
 def handle_events():
-    pass
+    global running
+    for event in get_events():
+        if event.type == SDL_QUIT:
+            running = False
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+            running = False
 
 
 def update():
@@ -30,7 +34,4 @@ while running:
     update()
     draw()
     delay(0.01)
-    frame_count += 1
-    if frame_count >= 3:
-        running = False
 close_canvas()
