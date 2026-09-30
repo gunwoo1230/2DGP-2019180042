@@ -6,6 +6,7 @@ GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)
 CHARACTER_HEIGHT = 340  # 애니메이션의 가장 큰 프레임이 화면에서 차지할 높이 (640의 절반 이상)
 FRAME_TIME = 0.08       # 프레임 하나를 보여주는 시간(초)
 REPEAT_COUNT = 5        # 애니메이션 하나를 반복하는 횟수
+PAUSE_TIME = 1.0        # 반복을 마친 뒤 정지하는 시간(초)
 
 # 프레임 = 시트 좌상단 기준 (x, y, w, h). 알파 경계로 타이트하게 잘라 프레임마다 크기가 다르다.
 RUN_FRAMES = [
@@ -77,8 +78,8 @@ def update():
     step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
     frame_index = step % len(frames)
     loop_count = step // len(frames)  # 마지막 프레임을 지나 0번으로 돌아올 때마다 1 증가
-    if loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 마지막 프레임에서 멈춘다
-        frame_index = len(frames) - 1
+    if loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 정지. 정지 중에는 첫 프레임을 보여준다
+        frame_index = 0
 
 
 def draw_frame(frame, x, foot_y, scale):
