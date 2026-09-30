@@ -3,11 +3,14 @@ from pico2d import *
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 
 running = True
+background = None
 
 
 def init():
+    global background
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
+    background = load_image('TUK_GROUND.png')
 
 
 def handle_events():
