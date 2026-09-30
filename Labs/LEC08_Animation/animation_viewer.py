@@ -1,3 +1,7 @@
+# Drill #8 애니메이션 뷰어
+# 소닉 스프라이트 시트의 4종 애니메이션(run, roll, balance, dizzy)을 화면 중앙에서
+# 각각 5회 반복 → 1초 정지 → 다음 순으로 무한 재생한다. ESC 또는 창 닫기로 종료.
+
 import os
 import sys
 from pico2d import *
@@ -90,6 +94,10 @@ class AnimationPlayer:
         self.animations[self.anim_index].draw(self.frame_index, x, foot_y)
 
 
+def find_missing_resources():
+    return [f for f in (BACKGROUND_FILE, GROUND_FILE, SHEET_FILE) if not os.path.isfile(f)]
+
+
 def init():
     global background, ground, player
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -98,10 +106,6 @@ def init():
     ground = load_image(GROUND_FILE)
     sheet = load_image(SHEET_FILE)
     player = AnimationPlayer([Animation(name, frames, sheet) for name, frames in ANIMATIONS])
-
-
-def find_missing_resources():
-    return [f for f in (BACKGROUND_FILE, GROUND_FILE, SHEET_FILE) if not os.path.isfile(f)]
 
 
 def handle_events():
@@ -125,6 +129,7 @@ def draw():
     update_canvas()
 
 
+# 메인
 os.chdir(os.path.dirname(os.path.abspath(__file__)))  # 어디서 실행해도 이 파일 옆의 리소스를 찾도록
 missing = find_missing_resources()
 if missing:  # 창을 열기 전에 확인해, 빈 창이 뜨거나 알 수 없는 OSError로 죽지 않게 한다
