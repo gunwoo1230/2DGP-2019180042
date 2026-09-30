@@ -1,3 +1,4 @@
+import os
 from pico2d import *
 
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
@@ -115,6 +116,7 @@ def draw():
     update_canvas()
 
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))  # 어디서 실행해도 이 파일 옆의 리소스를 찾도록
 init()
 while running:
     handle_events()
