@@ -4,6 +4,7 @@ CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 밖으로 내림
 GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)이 놓이는 높이
 CHARACTER_HEIGHT = 340  # 애니메이션의 가장 큰 프레임이 화면에서 차지할 높이 (640의 절반 이상)
+FRAME_TIME = 0.08       # 프레임 하나를 보여주는 시간(초)
 
 # 프레임 = 시트 좌상단 기준 (x, y, w, h). 알파 경계로 타이트하게 잘라 프레임마다 크기가 다르다.
 RUN_FRAMES = [
@@ -36,6 +37,9 @@ background = None
 ground = None
 sheet = None
 scales = {}  # 애니메이션 이름 → 배율. 한 애니메이션 안에서는 같은 배율을 써야 캐릭터가 떨리지 않는다.
+anim_index = 0    # ANIMATIONS 중 재생 중인 애니메이션
+frame_index = 0   # 그 애니메이션의 현재 프레임
+play_start = 0.0  # 현재 애니메이션 재생을 시작한 시각
 
 
 def calc_scale(frames):
@@ -43,7 +47,7 @@ def calc_scale(frames):
 
 
 def init():
-    global background, ground, sheet
+    global background, ground, sheet, play_start
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
     background = load_image('TUK_GROUND.png')
@@ -51,6 +55,7 @@ def init():
     sheet = load_image('sonic-sprite.png')
     for name, frames in ANIMATIONS:
         scales[name] = calc_scale(frames)
+    play_start = get_time()
 
 
 def handle_events():
@@ -63,7 +68,11 @@ def handle_events():
 
 
 def update():
-    pass
+    global frame_index
+    frames = ANIMATIONS[anim_index][1]
+    elapsed = get_time() - play_start
+    # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
+    frame_index = int(elapsed / FRAME_TIME) % len(frames)
 
 
 def draw_frame(frame, x, foot_y, scale):
