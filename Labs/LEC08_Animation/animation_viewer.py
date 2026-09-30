@@ -87,7 +87,8 @@ def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     ground.draw(CANVAS_WIDTH // 2, GRASS_CENTER_Y)
-    draw_frame(RUN_FRAMES[0], CANVAS_WIDTH // 2, GROUND_Y, scales['run'])
+    name, frames = ANIMATIONS[anim_index]
+    draw_frame(frames[frame_index], CANVAS_WIDTH // 2, GROUND_Y, scales[name])
     update_canvas()
 
 
