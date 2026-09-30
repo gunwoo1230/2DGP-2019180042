@@ -1,6 +1,7 @@
 from pico2d import *
 
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
+GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 밖으로 내림
 
 running = True
 background = None
@@ -31,6 +32,7 @@ def update():
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
+    ground.draw(CANVAS_WIDTH // 2, GRASS_CENTER_Y)
     update_canvas()
 
 
