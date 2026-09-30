@@ -58,6 +58,12 @@ def update():
     pass
 
 
+def draw_frame(frame, x, y):
+    fx, fy, fw, fh = frame
+    bottom = sheet.h - fy - fh  # 시트 좌상단 기준 y → pico2d 좌하단 기준 bottom
+    sheet.clip_draw(fx, bottom, fw, fh, x, y, fw, fh)
+
+
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
