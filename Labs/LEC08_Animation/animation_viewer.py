@@ -133,7 +133,12 @@ if missing:  # 창을 열기 전에 확인해, 빈 창이 뜨거나 알 수 없�
         print('  -', os.path.join(os.getcwd(), f))
     print('animation_viewer.py와 같은 폴더에 위 파일을 넣은 뒤 다시 실행하세요.')
     sys.exit(1)
-init()
+try:
+    init()
+except OSError:  # 파일은 있지만 이미지로 읽을 수 없는 경우 (손상된 파일 등)
+    close_canvas()
+    print('[오류] 이미지를 불러오지 못했습니다. 리소스 파일이 손상되지 않았는지 확인하세요.')
+    sys.exit(1)
 while running:
     handle_events()
     update()
