@@ -2,6 +2,7 @@ from pico2d import *
 
 CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 밖으로 내림
+GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)이 놓이는 높이
 
 running = True
 background = None
