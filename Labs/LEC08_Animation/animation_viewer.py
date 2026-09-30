@@ -4,13 +4,15 @@ CANVAS_WIDTH, CANVAS_HEIGHT = 800, 640
 
 running = True
 background = None
+ground = None
 
 
 def init():
-    global background
+    global background, ground
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
     background = load_image('TUK_GROUND.png')
+    ground = load_image('grass.png')
 
 
 def handle_events():
