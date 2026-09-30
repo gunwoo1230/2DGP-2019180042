@@ -5,6 +5,7 @@ GRASS_CENTER_Y = 30  # grass.png(높이 62)의 맨 아래 투명 1줄을 화면 
 GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)이 놓이는 높이
 CHARACTER_HEIGHT = 340  # 애니메이션의 가장 큰 프레임이 화면에서 차지할 높이 (640의 절반 이상)
 FRAME_TIME = 0.08       # 프레임 하나를 보여주는 시간(초)
+REPEAT_COUNT = 5        # 애니메이션 하나를 반복하는 횟수
 
 # 프레임 = 시트 좌상단 기준 (x, y, w, h). 알파 경계로 타이트하게 잘라 프레임마다 크기가 다르다.
 RUN_FRAMES = [
@@ -40,6 +41,7 @@ scales = {}  # 애니메이션 이름 → 배율. 한 애니메이션 안에서�
 anim_index = 0    # ANIMATIONS 중 재생 중인 애니메이션
 frame_index = 0   # 그 애니메이션의 현재 프레임
 play_start = 0.0  # 현재 애니메이션 재생을 시작한 시각
+loop_count = 0    # 현재 애니메이션을 끝까지 재생한 횟수
 
 
 def calc_scale(frames):
@@ -68,11 +70,13 @@ def handle_events():
 
 
 def update():
-    global frame_index
+    global frame_index, loop_count
     frames = ANIMATIONS[anim_index][1]
     elapsed = get_time() - play_start
     # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
-    frame_index = int(elapsed / FRAME_TIME) % len(frames)
+    step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
+    frame_index = step % len(frames)
+    loop_count = step // len(frames)  # 마지막 프레임을 지나 0번으로 돌아올 때마다 1 증가
 
 
 def draw_frame(frame, x, foot_y, scale):
