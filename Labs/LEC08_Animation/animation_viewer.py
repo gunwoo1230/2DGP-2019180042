@@ -71,7 +71,7 @@ def handle_events():
 
 
 def update():
-    global frame_index, loop_count, play_start
+    global anim_index, frame_index, loop_count, play_start
     frames = ANIMATIONS[anim_index][1]
     elapsed = get_time() - play_start
     # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
@@ -81,7 +81,8 @@ def update():
     if loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 정지. 정지 중에는 첫 프레임을 보여준다
         frame_index = 0
         pause_elapsed = elapsed - REPEAT_COUNT * len(frames) * FRAME_TIME
-        if pause_elapsed >= PAUSE_TIME:  # 정지 시간이 지나면 처음부터 다시 재생
+        if pause_elapsed >= PAUSE_TIME:  # 정지 시간이 지나면 다음 애니메이션으로 (마지막 다음은 처음)
+            anim_index = (anim_index + 1) % len(ANIMATIONS)
             play_start = get_time()
 
 
