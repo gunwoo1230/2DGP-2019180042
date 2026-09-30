@@ -37,11 +37,7 @@ ANIMATIONS = [
 running = True
 background = None
 ground = None
-animations = []  # Animation 객체 목록 (ANIMATIONS 순서)
-anim_index = 0    # animations 중 재생 중인 애니메이션
-frame_index = 0   # 그 애니메이션의 현재 프레임
-play_start = 0.0  # 현재 애니메이션 재생을 시작한 시각
-loop_count = 0    # 현재 애니메이션을 끝까지 재생한 횟수
+player = None
 
 
 class Animation:
@@ -60,16 +56,42 @@ class Animation:
         self.sheet.clip_draw(fx, bottom, fw, fh, x, foot_y + h / 2, w, h)
 
 
+class AnimationPlayer:
+    """애니메이션 목록을 차례로 REPEAT_COUNT회 반복 → PAUSE_TIME 정지 → 다음 순으로 무한 재생한다."""
+
+    def __init__(self, animations):
+        self.animations = animations
+        self.anim_index = 0     # 재생 중인 애니메이션
+        self.frame_index = 0    # 그 애니메이션의 현재 프레임
+        self.loop_count = 0     # 현재 애니메이션을 끝까지 재생한 횟수
+        self.play_start = get_time()  # 현재 애니메이션 재생을 시작한 시각
+
+    def update(self):
+        frames = self.animations[self.anim_index].frames
+        elapsed = get_time() - self.play_start
+        # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
+        step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
+        self.frame_index = step % len(frames)
+        self.loop_count = step // len(frames)  # 마지막 프레임을 지나 0번으로 돌아올 때마다 1 증가
+        if self.loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 정지. 정지 중에는 첫 프레임을 보여준다
+            self.frame_index = 0
+            pause_elapsed = elapsed - REPEAT_COUNT * len(frames) * FRAME_TIME
+            if pause_elapsed >= PAUSE_TIME:  # 정지 시간이 지나면 다음 애니메이션으로 (마지막 다음은 처음)
+                self.anim_index = (self.anim_index + 1) % len(self.animations)
+                self.play_start = get_time()
+
+    def draw(self, x, foot_y):
+        self.animations[self.anim_index].draw(self.frame_index, x, foot_y)
+
+
 def init():
-    global background, ground, play_start
+    global background, ground, player
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
     sheet = load_image('sonic-sprite.png')
-    for name, frames in ANIMATIONS:
-        animations.append(Animation(name, frames, sheet))
-    play_start = get_time()
+    player = AnimationPlayer([Animation(name, frames, sheet) for name, frames in ANIMATIONS])
 
 
 def handle_events():
@@ -82,26 +104,14 @@ def handle_events():
 
 
 def update():
-    global anim_index, frame_index, loop_count, play_start
-    frames = animations[anim_index].frames
-    elapsed = get_time() - play_start
-    # 루프 속도와 상관없이 경과 시간으로 프레임을 정한다.
-    step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
-    frame_index = step % len(frames)
-    loop_count = step // len(frames)  # 마지막 프레임을 지나 0번으로 돌아올 때마다 1 증가
-    if loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 정지. 정지 중에는 첫 프레임을 보여준다
-        frame_index = 0
-        pause_elapsed = elapsed - REPEAT_COUNT * len(frames) * FRAME_TIME
-        if pause_elapsed >= PAUSE_TIME:  # 정지 시간이 지나면 다음 애니메이션으로 (마지막 다음은 처음)
-            anim_index = (anim_index + 1) % len(animations)
-            play_start = get_time()
+    player.update()
 
 
 def draw():
     clear_canvas()
     background.draw(CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2, CANVAS_WIDTH, CANVAS_HEIGHT)
     ground.draw(CANVAS_WIDTH // 2, GRASS_CENTER_Y)
-    animations[anim_index].draw(frame_index, CANVAS_WIDTH // 2, GROUND_Y)
+    player.draw(CANVAS_WIDTH // 2, GROUND_Y)
     update_canvas()
 
 
