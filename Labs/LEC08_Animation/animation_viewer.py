@@ -77,6 +77,8 @@ def update():
     step = int(elapsed / FRAME_TIME)  # 시작 후 지나간 프레임 수
     frame_index = step % len(frames)
     loop_count = step // len(frames)  # 마지막 프레임을 지나 0번으로 돌아올 때마다 1 증가
+    if loop_count >= REPEAT_COUNT:    # 5회 반복을 마치면 마지막 프레임에서 멈춘다
+        frame_index = len(frames) - 1
 
 
 def draw_frame(frame, x, foot_y, scale):
