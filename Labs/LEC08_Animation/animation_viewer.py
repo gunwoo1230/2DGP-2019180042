@@ -7,14 +7,16 @@ GROUND_Y = 52        # 발판 잔디 윗면. 캐릭터 발(프레임 아래 변)
 running = True
 background = None
 ground = None
+sheet = None
 
 
 def init():
-    global background, ground
+    global background, ground, sheet
     open_canvas(CANVAS_WIDTH, CANVAS_HEIGHT)
     hide_lattice()
     background = load_image('TUK_GROUND.png')
     ground = load_image('grass.png')
+    sheet = load_image('sonic-sprite.png')
 
 
 def handle_events():
